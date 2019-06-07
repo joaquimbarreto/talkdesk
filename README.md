@@ -37,3 +37,8 @@ Each app has:
 The template provided is only an optional starting point that you may choose not to use or change it if you feel that you can improve it.
 
 \*\* you should have received the files "index.html", "styles.css" and "apps.json"; if you didn't, please request it.
+
+# Server
+
+To start server: json-server --watch apps.json
+To start app: yarn start
