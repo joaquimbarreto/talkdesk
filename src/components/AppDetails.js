@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export class AppDetails extends Component {
+class AppDetails extends Component {
   render() {
     return (
       <div class="app-item">

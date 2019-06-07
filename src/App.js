@@ -10,18 +10,31 @@ class App extends Component {
     apps: [],
     app1: 0,
     app2: 3,
-    category: ""
+    category: "",
+    categories: []
   };
 
   componentDidMount = () => {
     fetch(API)
       .then(response => response.json())
       .then(data => {
+        const cats = data.map(app => app.categories);
+        const allCategories = Array.prototype.concat.apply([], cats);
+        const uniqCategories = allCategories.filter((item, index) => {
+          return allCategories.indexOf(item) >= index;
+        });
         this.setState({
           apps: data,
-          category: "Channels"
+          category: "Channels",
+          categories: uniqCategories
         });
+        // debugger;
       });
+  };
+
+  sortCategories = () => {
+    const cats = this.state.categories;
+    return cats.sort();
   };
 
   filterApps = () => {
@@ -53,9 +66,13 @@ class App extends Component {
   };
 
   render() {
+    // debugger;
     return (
       <div className="flex-container">
-        <Nav category={this.setCategory} />
+        <Nav
+          setCategory={this.setCategory}
+          categories={this.sortCategories()}
+        />
         <List
           apps={this.showApps()}
           nextApps={this.nextApps}
