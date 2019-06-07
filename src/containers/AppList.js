@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AppDetails from "../components/AppDetails";
+import Paginate from "../components/Paginate";
 
 class AppList extends Component {
   render() {
@@ -17,23 +18,10 @@ class AppList extends Component {
             })}
           </li>
         </ul>
-        <ul class="pagination">
-          <li>
-            <a href="#">&lt;</a>
-          </li>
-          <li>
-            <a href="#">1</a>
-          </li>
-          <li class="active">
-            <a href="#">2</a>
-          </li>
-          <li>
-            <a href="#">3</a>
-          </li>
-          <li>
-            <a href="#">&gt;</a>
-          </li>
-        </ul>
+        <Paginate
+          nextApps={this.props.nextApps}
+          previousApps={this.props.previousApps}
+        />
       </div>
     );
   }

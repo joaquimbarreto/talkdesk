@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Nav from "./components/Nav";
-import List from "./containers/AppList.js";
+import AppList from "./containers/AppList.js";
 import "./styles.css";
 
 const API = "http://localhost:3001/apps";
@@ -73,7 +73,7 @@ class App extends Component {
           setCategory={this.setCategory}
           categories={this.sortCategories()}
         />
-        <List
+        <AppList
           apps={this.showApps()}
           nextApps={this.nextApps}
           previousApps={this.previousApps}

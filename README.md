@@ -40,5 +40,6 @@ The template provided is only an optional starting point that you may choose not
 
 # Server
 
-To start server: json-server --watch apps.json
+To start server: json-server --watch apps.json --port 3001
+
 To start app: yarn start
