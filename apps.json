@@ -155,6 +155,66 @@
           "price": 4000
         }
       ]
+    },
+    {
+      "id": "470fedc5-489e-5acb-a200-c85abba18856",
+      "name": "CCTV",
+      "description": "George Orwell 1984.",
+      "categories": ["Dialer", "Channels", "Management"],
+      "subscriptions": [
+        {
+          "name": "Trial",
+          "price": 0
+        },
+        {
+          "name": "Professional",
+          "price": 1080
+        },
+        {
+          "name": "Premium",
+          "price": 6200
+        }
+      ]
+    },
+    {
+      "id": "470fbic5-489e-5acb-a200-c85acdc18356",
+      "name": "Facial Recognition AI",
+      "description": "Amazon's new cool tool.",
+      "categories": ["Optimization", "Productivity", "Reporting"],
+      "subscriptions": [
+        {
+          "name": "Trial",
+          "price": 0
+        },
+        {
+          "name": "Professional",
+          "price": 1000
+        },
+        {
+          "name": "Premium",
+          "price": 9000
+        }
+      ]
+    },
+    {
+      "id": "670lfcc5-489e-5lfc-a200-c85adaa18356",
+      "name": "Caller ID",
+      "description": "Old but realiable.",
+      "categories": ["Voice Analytics", "Productivity", "Channels"],
+      "subscriptions": [
+        {
+          "name": "Trial",
+          "price": 0
+        },
+        {
+          "name": "Professional",
+          "price": 1
+        },
+        {
+          "name": "Premium",
+          "price": 2
+        }
+      ]
     }
   ]
 }

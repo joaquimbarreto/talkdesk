@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Categories from "./Categories";
 import "../styles.css";
 
-class Nav extends Component {
+export class Nav extends Component {
   render() {
     return (
       <nav class="nav-categories">

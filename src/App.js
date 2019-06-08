@@ -5,13 +5,15 @@ import "./styles.css";
 
 const API = "http://localhost:3001/apps";
 
-class App extends Component {
+export class App extends Component {
   state = {
     apps: [],
-    app1: 0,
-    app2: 3,
+    indexOfFirstApp: 0,
+    indexOfLastApp: 3,
     category: "",
-    categories: []
+    categories: [],
+    currentPage: 1,
+    appsPerPage: 3
   };
 
   componentDidMount = () => {
@@ -28,8 +30,11 @@ class App extends Component {
           category: "Channels",
           categories: uniqCategories
         });
-        // debugger;
       });
+  };
+
+  setCategory = category => {
+    this.setState({ category });
   };
 
   sortCategories = () => {
@@ -44,29 +49,43 @@ class App extends Component {
   };
 
   showApps = () => {
-    return this.filterApps().slice(this.state.app1, this.state.app2);
+    return this.filterApps().slice(
+      this.state.indexOfFirstApp,
+      this.state.indexOfLastApp
+    );
   };
 
   nextApps = () => {
     this.setState({
-      app1: this.state.app1 + 3,
-      app2: this.state.app2 + 3
+      indexOfFirstApp: this.state.indexOfFirstApp + 3,
+      indexOfLastApp: this.state.indexOfLastApp + 3
     });
   };
 
   previousApps = () => {
     this.setState({
-      app1: this.state.app1 - 3,
-      app2: this.state.app2 - 3
+      indexOfFirstApp: this.state.indexOfFirstApp - 3,
+      indexOfLastApp: this.state.indexOfLastApp - 3
     });
   };
 
-  setCategory = category => {
-    this.setState({ category });
+  handleClick = event => {
+    this.setState({
+      currentPage: Number(event.target.id)
+    });
+    this.setNewIndex();
+  };
+
+  setNewIndex = () => {
+    const newIndexOfLastApp = this.state.currentPage * this.state.appsPerPage;
+    const newIndexOfFirstApp = newIndexOfLastApp - this.state.appsPerPage;
+    this.setState({
+      indexOfFirstApp: newIndexOfFirstApp,
+      indexOfLastApp: newIndexOfLastApp
+    });
   };
 
   render() {
-    // debugger;
     return (
       <div className="flex-container">
         <Nav
@@ -77,6 +96,7 @@ class App extends Component {
           apps={this.showApps()}
           nextApps={this.nextApps}
           previousApps={this.previousApps}
+          handleClick={this.handleClick}
         />
       </div>
     );

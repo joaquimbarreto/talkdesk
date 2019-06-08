@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class Categories extends Component {
+export class Categories extends Component {
   render() {
     return (
       <li class="active">
