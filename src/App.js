@@ -76,6 +76,10 @@ export class App extends Component {
   };
 
   nextApps = () => {
+    const numOfApps2 = this.numAppsInChosenApps();
+    if (numOfApps2 / 3 < this.state.indexOfLastApp) {
+      return null;
+    }
     this.setState({
       indexOfFirstApp: this.state.indexOfFirstApp + 3,
       indexOfLastApp: this.state.indexOfLastApp + 3
@@ -83,6 +87,9 @@ export class App extends Component {
   };
 
   previousApps = () => {
+    if (this.state.indexOfFirstApp === 0) {
+      return null;
+    }
     this.setState({
       indexOfFirstApp: this.state.indexOfFirstApp - 3,
       indexOfLastApp: this.state.indexOfLastApp - 3
