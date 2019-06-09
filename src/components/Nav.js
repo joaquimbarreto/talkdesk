@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Categories from "./Categories";
 import "../styles.css";
 
 export class Nav extends Component {
@@ -10,10 +9,11 @@ export class Nav extends Component {
         <ul className="nav-menu">
           {this.props.categories.map(category => {
             return (
-              <Categories
-                category={category}
-                setCategory={this.props.setCategory}
-              />
+              <li key={category} className="active">
+                <a onClick={() => this.props.setCategory(category)}>
+                  {category}
+                </a>
+              </li>
             );
           })}
         </ul>

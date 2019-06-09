@@ -17,7 +17,11 @@ export class AppList extends Component {
         </section>
         <ul>
           {this.props.apps.map(app => {
-            return <AppDetails app={app} />;
+            return (
+              <li key={app.id}>
+                <AppDetails app={app} />
+              </li>
+            );
           })}
         </ul>
         <Paginate
