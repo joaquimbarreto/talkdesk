@@ -31,7 +31,6 @@ export class App extends Component {
         });
         this.setState({
           apps: data,
-          category: "Channels",
           categories: uniqCategories
         });
       })
@@ -44,6 +43,12 @@ export class App extends Component {
       indexOfFirstApp: 0,
       indexOfLastApp: 3,
       activePage: 1
+    });
+  };
+
+  resetCategory = () => {
+    this.setState({
+      category: ""
     });
   };
 
@@ -63,7 +68,11 @@ export class App extends Component {
         if (app.name.toLowerCase().includes(searchedTerm.toLowerCase()))
           chosenApps.push(app);
       } else {
-        if (app.categories.includes(currentCategory)) chosenApps.push(app);
+        if (
+          app.categories.includes(currentCategory) ||
+          this.state.category.length === 0
+        )
+          chosenApps.push(app);
       }
     });
     return chosenApps;
@@ -129,6 +138,7 @@ export class App extends Component {
           setCategory={this.setCategory}
           categories={this.sortCategories()}
           currentCategory={category}
+          resetCategory={this.resetCategory}
         />
         <AppList
           apps={this.showApps()}

@@ -3,11 +3,16 @@ import "../styles.css";
 
 export class Nav extends Component {
   render() {
-    const { categories, currentCategory, setCategory } = this.props;
+    const {
+      categories,
+      currentCategory,
+      setCategory,
+      resetCategory
+    } = this.props;
 
     return (
       <nav className="nav-categories">
-        <h2>Categories</h2>
+        <h2 onClick={resetCategory}>Categories</h2>
         <ul className="nav-menu">
           {categories.map(category => {
             return (
