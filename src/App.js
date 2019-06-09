@@ -78,7 +78,6 @@ export class App extends Component {
   };
 
   showApps = () => {
-    this.sumSubs();
     return this.filterApps().slice(
       this.state.indexOfFirstApp,
       this.state.indexOfLastApp
