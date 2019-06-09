@@ -6,17 +6,19 @@ export class AppList extends Component {
   render() {
     return (
       <div>
-        <section class="apps-list">
+        <section className="apps-list">
           <header>
-            <input type="text" placeholder="Search by App" />
+            <input
+              type="text"
+              placeholder="Search by App"
+              onChange={this.props.handleChange}
+            />
           </header>
         </section>
         <ul>
-          <li>
-            {this.props.apps.map(app => {
-              return <AppDetails app={app} />;
-            })}
-          </li>
+          {this.props.apps.map(app => {
+            return <AppDetails app={app} />;
+          })}
         </ul>
         <Paginate
           apps={this.props.apps}

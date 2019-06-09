@@ -9,20 +9,20 @@ export class Paginate extends Component {
     }
     return (
       <div>
-        <ul class="pagination">
-          <li onClick={this.props.previousApps}>
+        <ul className="pagination">
+          <li key="less" onClick={this.props.previousApps}>
             <a>&lt;</a>
           </li>
 
           {pageNumbers.map(number => {
             return (
-              <li class="active">
+              <li key={number} className="active">
                 <a onClick={() => this.props.handleClick}>{number}</a>
               </li>
             );
           })}
 
-          <li onClick={this.props.nextApps}>
+          <li key="more" onClick={this.props.nextApps}>
             <a>&gt;</a>
           </li>
         </ul>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Nav from "./components/Nav";
 import AppList from "./containers/AppList.js";
 import "./styles.css";
+import { all } from "q";
 
 const API = "http://localhost:3001/apps";
 
@@ -13,7 +14,8 @@ export class App extends Component {
     category: "",
     categories: [],
     currentPage: 1,
-    appsPerPage: 3
+    appsPerPage: 3,
+    searchTerm: ""
   };
 
   componentDidMount = () => {
@@ -43,9 +45,13 @@ export class App extends Component {
   };
 
   filterApps = () => {
-    return this.state.apps.filter(app =>
-      app.categories.includes(this.state.category)
-    );
+    const allApps = this.state.apps;
+    const chosenApps = [];
+    const currentCategory = this.state.category;
+    allApps.forEach(app => {
+      if (app.categories.includes(currentCategory)) chosenApps.push(app);
+    });
+    return chosenApps;
   };
 
   showApps = () => {
@@ -85,7 +91,14 @@ export class App extends Component {
     });
   };
 
+  handleChange = event => {
+    this.setState({
+      searchTerm: event.target.value
+    });
+  };
+
   render() {
+    // debugger;
     return (
       <div className="flex-container">
         <Nav
@@ -97,6 +110,7 @@ export class App extends Component {
           nextApps={this.nextApps}
           previousApps={this.previousApps}
           handleClick={this.handleClick}
+          handleChange={this.handleChange}
         />
       </div>
     );

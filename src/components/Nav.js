@@ -5,9 +5,9 @@ import "../styles.css";
 export class Nav extends Component {
   render() {
     return (
-      <nav class="nav-categories">
+      <nav className="nav-categories">
         <h2>Categories</h2>
-        <ul class="nav-menu">
+        <ul className="nav-menu">
           {this.props.categories.map(category => {
             return (
               <Categories
