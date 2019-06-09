@@ -171,6 +171,10 @@ input:focus {
   order: 1;
 }
 
+.nav-categories h2 {
+  cursor: pointer;
+}
+
 .nav-categories ul {
   list-style-type: none;
 }
@@ -202,15 +206,18 @@ input:focus {
 
 /*Pagination*/
 .pagination {
+  border: none;
   text-align: center;
   order: 3;
 }
 
 .pagination {
+  border: none;
   width: 100%;
 }
 
 .pagination {
+  border: none;
   display: inline-flex;
   align-items: center;
   padding-left: 0;
@@ -219,35 +226,47 @@ input:focus {
 }
 
 .pagination li {
+  border: none;
   margin-right: 0.25rem;
 }
 
 .pagination li:last-child {
+  border: none;
   margin-right: 0;
 }
 
 .pagination li a {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
   transition: all 0.3s ease-in-out;
   color: var(--gray-dark);
+  display: inline;
   padding: 0.375rem 0.4375rem;
   text-decoration: none;
 }
 
 .pagination li a:hover {
+  text-decoration: none;
+  border: none;
   background: var(--teal);
   color: var(--white);
 }
 
 .pagination li a:focus {
+  text-decoration: none;
+  border: none;
   box-shadow: inset 0 0 0 2px var(--teal);
 }
 
 .pagination li a:active {
+  border: none;
   background: var(--gray-dark);
   color: var(--white);
 }
 
 .pagination .active a {
+  border: none;
   background: var(--teal);
   color: var(--white);
   pointer-events: none;

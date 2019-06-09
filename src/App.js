@@ -29,9 +29,10 @@ export class App extends Component {
         const uniqCategories = allCategories.filter((item, index) => {
           return allCategories.indexOf(item) >= index;
         });
+        const sortUniqCategories = uniqCategories.sort();
         this.setState({
           apps: data,
-          categories: uniqCategories
+          categories: sortUniqCategories
         });
       })
       .catch(err => console.log(err));
@@ -48,13 +49,11 @@ export class App extends Component {
 
   resetCategory = () => {
     this.setState({
-      category: ""
+      category: "",
+      activePage: 1,
+      indexOfFirstApp: 0,
+      indexOfLastApp: 3
     });
-  };
-
-  sortCategories = () => {
-    const cats = this.state.categories;
-    return cats.sort();
   };
 
   filterApps = () => {
@@ -70,7 +69,7 @@ export class App extends Component {
       } else {
         if (
           app.categories.includes(currentCategory) ||
-          this.state.category.length === 0
+          currentCategory.length === 0
         )
           chosenApps.push(app);
       }
@@ -78,16 +77,17 @@ export class App extends Component {
     return chosenApps;
   };
 
-  numAppsInChosenApps = () => {
-    const numOfApps = this.filterApps();
-    return numOfApps.length;
-  };
-
   showApps = () => {
+    this.sumSubs();
     return this.filterApps().slice(
       this.state.indexOfFirstApp,
       this.state.indexOfLastApp
     );
+  };
+
+  numAppsInChosenApps = () => {
+    const numOfApps = this.filterApps();
+    return numOfApps.length;
   };
 
   nextApps = () => {
@@ -130,13 +130,13 @@ export class App extends Component {
   };
 
   render() {
-    const { category, activePage } = this.state;
+    const { category, activePage, categories } = this.state;
 
     return (
       <div className="flex-container">
         <Nav
           setCategory={this.setCategory}
-          categories={this.sortCategories()}
+          categories={categories}
           currentCategory={category}
           resetCategory={this.resetCategory}
         />
