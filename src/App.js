@@ -49,11 +49,18 @@ export class App extends Component {
   };
 
   filterApps = () => {
-    const allApps = this.state.apps;
-    const chosenApps = [];
+    const allApps = this.state.apps.slice();
+    const searchedTerm = this.state.searchTerm;
     const currentCategory = this.state.category;
+    const chosenApps = [];
+
     allApps.forEach(app => {
-      if (app.categories.includes(currentCategory)) chosenApps.push(app);
+      if (searchedTerm.length > 0) {
+        if (app.name.toLowerCase().includes(searchedTerm.toLowerCase()))
+          chosenApps.push(app);
+      } else {
+        if (app.categories.includes(currentCategory)) chosenApps.push(app);
+      }
     });
     return chosenApps;
   };
@@ -102,7 +109,6 @@ export class App extends Component {
   };
 
   render() {
-    // debugger;
     return (
       <div className="flex-container">
         <Nav
