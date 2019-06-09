@@ -52,7 +52,8 @@ export class App extends Component {
       category: "",
       activePage: 1,
       indexOfFirstApp: 0,
-      indexOfLastApp: 3
+      indexOfLastApp: 3,
+      searchTerm: ""
     });
   };
 
@@ -77,8 +78,22 @@ export class App extends Component {
     return chosenApps;
   };
 
+  sortChosenApps = () => {
+    return this.filterApps().sort((a, b) => {
+      var sumA = a.subscriptions.reduce((prev, next) => prev + next.price, 0);
+      var sumB = b.subscriptions.reduce((prev, next) => prev + next.price, 0);
+      if (sumA < sumB) {
+        return -1;
+      }
+      if (sumA > sumB) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+
   showApps = () => {
-    return this.filterApps().slice(
+    return this.sortChosenApps().slice(
       this.state.indexOfFirstApp,
       this.state.indexOfLastApp
     );
