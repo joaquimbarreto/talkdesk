@@ -4,6 +4,16 @@ import Paginate from "../components/Paginate";
 
 export class AppList extends Component {
   render() {
+    const {
+      apps,
+      numOfApps,
+      nextApps,
+      previousApps,
+      handleClick,
+      handleChange,
+      activePage
+    } = this.props;
+
     return (
       <div>
         <section className="apps-list">
@@ -11,12 +21,12 @@ export class AppList extends Component {
             <input
               type="text"
               placeholder="Search by App"
-              onChange={this.props.handleChange}
+              onChange={handleChange}
             />
           </header>
         </section>
         <ul>
-          {this.props.apps.map(app => {
+          {apps.map(app => {
             return (
               <li key={app.id}>
                 <AppDetails app={app} />
@@ -25,12 +35,11 @@ export class AppList extends Component {
           })}
         </ul>
         <Paginate
-          apps={this.props.apps}
-          nextApps={this.props.nextApps}
-          previousApps={this.props.previousApps}
-          handleClick={this.props.handleClick}
-          numOfApps={this.props.numOfApps}
-          activePage={this.props.activePage}
+          nextApps={nextApps}
+          previousApps={previousApps}
+          handleClick={handleClick}
+          numOfApps={numOfApps}
+          activePage={activePage}
         />
       </div>
     );

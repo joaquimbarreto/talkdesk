@@ -83,11 +83,11 @@ export class App extends Component {
 
   nextApps = () => {
     const numOfApps2 = this.numAppsInChosenApps();
-    if (numOfApps2 / 3 < this.state.indexOfLastApp) {
+    if (numOfApps2 <= this.state.indexOfLastApp) {
       return null;
     }
     this.setState({
-      activePage: this.state.activePage - 1,
+      activePage: this.state.activePage + 1,
       indexOfFirstApp: this.state.indexOfFirstApp + 3,
       indexOfLastApp: this.state.indexOfLastApp + 3
     });
@@ -121,12 +121,14 @@ export class App extends Component {
   };
 
   render() {
+    const { category, activePage } = this.state;
+
     return (
       <div className="flex-container">
         <Nav
           setCategory={this.setCategory}
           categories={this.sortCategories()}
-          currentCategory={this.state.category}
+          currentCategory={category}
         />
         <AppList
           apps={this.showApps()}
@@ -135,7 +137,7 @@ export class App extends Component {
           previousApps={this.previousApps}
           handleClick={this.handlePaginateClick}
           handleChange={this.handleChange}
-          activePage={this.state.activePage}
+          activePage={activePage}
         />
       </div>
     );
