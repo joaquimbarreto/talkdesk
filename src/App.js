@@ -12,8 +12,6 @@ export class App extends Component {
     indexOfLastApp: 3,
     category: "",
     categories: [],
-    currentPage: 1,
-    appsPerPage: 3,
     searchTerm: ""
   };
 
@@ -65,20 +63,16 @@ export class App extends Component {
     return chosenApps;
   };
 
+  numAppsInChosenApps = () => {
+    const numOfApps = this.filterApps();
+    return numOfApps.length;
+  };
+
   showApps = () => {
     return this.filterApps().slice(
       this.state.indexOfFirstApp,
       this.state.indexOfLastApp
     );
-  };
-
-  setNewIndex = () => {
-    const newIndexOfLastApp = this.state.currentPage * this.state.appsPerPage;
-    const newIndexOfFirstApp = newIndexOfLastApp - this.state.appsPerPage;
-    this.setState({
-      indexOfFirstApp: newIndexOfFirstApp,
-      indexOfLastApp: newIndexOfLastApp
-    });
   };
 
   nextApps = () => {
@@ -95,11 +89,13 @@ export class App extends Component {
     });
   };
 
-  handlePaginateClick = event => {
+  handlePaginateClick = page => {
+    const newIndexOfLastApp = page * 3;
+    const newIndexOfFirstApp = newIndexOfLastApp - 3;
     this.setState({
-      currentPage: Number(event.target.id)
+      indexOfFirstApp: newIndexOfFirstApp,
+      indexOfLastApp: newIndexOfLastApp
     });
-    this.setNewIndex();
   };
 
   handleChange = event => {
@@ -117,6 +113,7 @@ export class App extends Component {
         />
         <AppList
           apps={this.showApps()}
+          numOfApps={this.numAppsInChosenApps()}
           nextApps={this.nextApps}
           previousApps={this.previousApps}
           handleClick={this.handlePaginateClick}

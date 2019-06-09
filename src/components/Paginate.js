@@ -4,7 +4,7 @@ export class Paginate extends Component {
   render() {
     // Logic for displaying page numbers
     const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(this.props.apps.length / 3); i++) {
+    for (let i = 1; i <= Math.ceil(this.props.numOfApps / 3); i++) {
       pageNumbers.push(i);
     }
     return (
@@ -16,8 +16,12 @@ export class Paginate extends Component {
 
           {pageNumbers.map(number => {
             return (
-              <li key={number} className="active">
-                <a onClick={() => this.props.handleClick}>{number}</a>
+              <li
+                key={number}
+                className="active"
+                onClick={() => this.props.handleClick(number)}
+              >
+                <a>{number}</a>
               </li>
             );
           })}
