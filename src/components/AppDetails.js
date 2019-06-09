@@ -4,7 +4,7 @@ export class AppDetails extends Component {
   render() {
     const { app } = this.props;
 
-    const appCategories = app.categories;
+    const appCategories = app.categories.slice();
     const firstAppCategory = appCategories.shift();
 
     return (

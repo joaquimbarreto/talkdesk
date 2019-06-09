@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Nav from "./components/Nav";
 import AppList from "./containers/AppList.js";
 import "./styles.css";
-import { all } from "q";
 
 const API = "http://localhost:3001/apps";
 
@@ -18,9 +17,13 @@ export class App extends Component {
     searchTerm: ""
   };
 
+  fetchAPI = async () => {
+    const response = await fetch(API);
+    return await response.json();
+  };
+
   componentDidMount = () => {
-    fetch(API)
-      .then(response => response.json())
+    this.fetchAPI()
       .then(data => {
         const cats = data.map(app => app.categories);
         const allCategories = Array.prototype.concat.apply([], cats);
@@ -32,7 +35,8 @@ export class App extends Component {
           category: "Channels",
           categories: uniqCategories
         });
-      });
+      })
+      .catch(err => console.log(err));
   };
 
   setCategory = category => {
@@ -61,6 +65,15 @@ export class App extends Component {
     );
   };
 
+  setNewIndex = () => {
+    const newIndexOfLastApp = this.state.currentPage * this.state.appsPerPage;
+    const newIndexOfFirstApp = newIndexOfLastApp - this.state.appsPerPage;
+    this.setState({
+      indexOfFirstApp: newIndexOfFirstApp,
+      indexOfLastApp: newIndexOfLastApp
+    });
+  };
+
   nextApps = () => {
     this.setState({
       indexOfFirstApp: this.state.indexOfFirstApp + 3,
@@ -75,20 +88,11 @@ export class App extends Component {
     });
   };
 
-  handleClick = event => {
+  handlePaginateClick = event => {
     this.setState({
       currentPage: Number(event.target.id)
     });
     this.setNewIndex();
-  };
-
-  setNewIndex = () => {
-    const newIndexOfLastApp = this.state.currentPage * this.state.appsPerPage;
-    const newIndexOfFirstApp = newIndexOfLastApp - this.state.appsPerPage;
-    this.setState({
-      indexOfFirstApp: newIndexOfFirstApp,
-      indexOfLastApp: newIndexOfLastApp
-    });
   };
 
   handleChange = event => {
@@ -109,7 +113,7 @@ export class App extends Component {
           apps={this.showApps()}
           nextApps={this.nextApps}
           previousApps={this.previousApps}
-          handleClick={this.handleClick}
+          handleClick={this.handlePaginateClick}
           handleChange={this.handleChange}
         />
       </div>

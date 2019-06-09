@@ -157,7 +157,7 @@
       ]
     },
     {
-      "id": "470fedc5-489e-5acb-a200-c85abba18856",
+      "id": "470fedc5-489e-5acb-a200-c85abba1892",
       "name": "CCTV",
       "description": "George Orwell 1984.",
       "categories": ["Dialer", "Channels", "Management"],
@@ -177,7 +177,7 @@
       ]
     },
     {
-      "id": "470fbic5-489e-5acb-a200-c85acdc18356",
+      "id": "470fbic5-489e-5acb-a200-c85acdc1892",
       "name": "Facial Recognition AI",
       "description": "Amazon's new cool tool.",
       "categories": ["Optimization", "Productivity", "Reporting"],
@@ -197,7 +197,7 @@
       ]
     },
     {
-      "id": "670lfcc5-489e-5lfc-a200-c85adaa18356",
+      "id": "670lfcc5-489e-5lfc-a200-c85adaa1892",
       "name": "Caller ID",
       "description": "Old but realiable.",
       "categories": ["Voice Analytics", "Productivity", "Channels"],
