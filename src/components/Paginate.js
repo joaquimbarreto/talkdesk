@@ -18,7 +18,7 @@ export class Paginate extends Component {
             return (
               <li
                 key={number}
-                className="active"
+                className={this.props.activePage === number ? "active" : null}
                 onClick={() => this.props.handleClick(number)}
               >
                 <a>{number}</a>

@@ -12,7 +12,8 @@ export class App extends Component {
     indexOfLastApp: 3,
     category: "",
     categories: [],
-    searchTerm: ""
+    searchTerm: "",
+    activePage: 1
   };
 
   fetchAPI = async () => {
@@ -38,7 +39,12 @@ export class App extends Component {
   };
 
   setCategory = category => {
-    this.setState({ category });
+    this.setState({
+      category,
+      indexOfFirstApp: 0,
+      indexOfLastApp: 3,
+      activePage: 1
+    });
   };
 
   sortCategories = () => {
@@ -81,6 +87,7 @@ export class App extends Component {
       return null;
     }
     this.setState({
+      activePage: this.state.activePage - 1,
       indexOfFirstApp: this.state.indexOfFirstApp + 3,
       indexOfLastApp: this.state.indexOfLastApp + 3
     });
@@ -91,6 +98,7 @@ export class App extends Component {
       return null;
     }
     this.setState({
+      activePage: this.state.activePage - 1,
       indexOfFirstApp: this.state.indexOfFirstApp - 3,
       indexOfLastApp: this.state.indexOfLastApp - 3
     });
@@ -100,6 +108,7 @@ export class App extends Component {
     const newIndexOfLastApp = page * 3;
     const newIndexOfFirstApp = newIndexOfLastApp - 3;
     this.setState({
+      activePage: page,
       indexOfFirstApp: newIndexOfFirstApp,
       indexOfLastApp: newIndexOfLastApp
     });
@@ -117,6 +126,7 @@ export class App extends Component {
         <Nav
           setCategory={this.setCategory}
           categories={this.sortCategories()}
+          currentCategory={this.state.category}
         />
         <AppList
           apps={this.showApps()}
@@ -125,6 +135,7 @@ export class App extends Component {
           previousApps={this.previousApps}
           handleClick={this.handlePaginateClick}
           handleChange={this.handleChange}
+          activePage={this.state.activePage}
         />
       </div>
     );

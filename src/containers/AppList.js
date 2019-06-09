@@ -30,6 +30,7 @@ export class AppList extends Component {
           previousApps={this.props.previousApps}
           handleClick={this.props.handleClick}
           numOfApps={this.props.numOfApps}
+          activePage={this.props.activePage}
         />
       </div>
     );

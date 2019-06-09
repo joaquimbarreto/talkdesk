@@ -215,6 +215,26 @@
           "price": 2
         }
       ]
+    },
+    {
+      "id": "7f89f001-9d7d-52f1-82cb-8f44eb1e4680",
+      "name": "LinkedIn Integration",
+      "description": "Integrate your contacts with LinkedIn.",
+      "categories": ["Productivity"],
+      "subscriptions": [
+        {
+          "name": "Trial",
+          "price": 0
+        },
+        {
+          "name": "Professional",
+          "price": 2500
+        },
+        {
+          "name": "Premium",
+          "price": 99999
+        }
+      ]
     }
   ]
 }

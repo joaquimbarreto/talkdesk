@@ -9,7 +9,12 @@ export class Nav extends Component {
         <ul className="nav-menu">
           {this.props.categories.map(category => {
             return (
-              <li key={category} className="active">
+              <li
+                key={category}
+                className={
+                  this.props.currentCategory === category ? "active" : null
+                }
+              >
                 <a onClick={() => this.props.setCategory(category)}>
                   {category}
                 </a>
