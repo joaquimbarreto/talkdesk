@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 // import Nav from "./components/Nav";
 import NavHooks from "./components/NavHooks";
 import AppList from "./containers/AppList.js";
@@ -6,55 +6,71 @@ import "./styles.css";
 
 const API = "http://localhost:3001/apps";
 
-export class App extends Component {
-  // React hooks baby!
-  state = {
-    apps: [],
-    indexOfFirstApp: 0,
-    indexOfLastApp: 3,
-    category: "",
-    searchTerm: "",
-    activePage: 1
-  };
+const App = props => {
+  // state = {
+  //   apps: [],
+  //   indexOfFirstApp: 0,
+  //   indexOfLastApp: 3,
+  //   category: "",
+  //   searchTerm: "",
+  //   activePage: 1
+  // };
 
-  fetchAPI = async () => {
+  const [apps, setApps] = useState([]);
+
+  const [activePage, setActivePage] = useState(1);
+
+  const [category, setCategory] = useState("");
+
+  const [appIndex, setAppIndex] = useState({
+    indexOfFirstApp: 0,
+    indexOfLastApp: 3
+  });
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const fetchAPI = async () => {
     const response = await fetch(API);
     return await response.json();
   };
 
-  componentDidMount = () => {
-    this.fetchAPI()
-      .then(data => {
-        this.setState({
-          apps: data
-        });
-      })
-      .catch(err => console.log(err));
-  };
+  useEffect(() => {
+    fetchAPI().then(data => setApps(data));
+  }, []);
 
-  setCategory = category => {
-    this.setState({
-      category,
+  // componentDidMount = () => {
+  //   this.fetchAPI()
+  //     .then(data => {
+  //       this.setState({
+  //         apps: data
+  //       });
+  //     })
+  //     .catch(err => console.log(err));
+  // };
+
+  const categoryHandler = category => {
+    setActivePage(1);
+    setCategory(category);
+    setAppIndex({
       indexOfFirstApp: 0,
-      indexOfLastApp: 3,
-      activePage: 1
+      indexOfLastApp: 3
     });
   };
 
-  resetCategory = () => {
-    this.setState({
-      category: "",
-      activePage: 1,
+  const resetCategory = () => {
+    setActivePage(1);
+    setCategory("");
+    setAppIndex({
       indexOfFirstApp: 0,
-      indexOfLastApp: 3,
-      searchTerm: ""
+      indexOfLastApp: 3
     });
+    setSearchTerm("");
   };
 
-  filterApps = () => {
-    const allApps = this.state.apps.slice();
-    const searchedTerm = this.state.searchTerm;
-    const currentCategory = this.state.category;
+  const filterApps = () => {
+    const allApps = apps.slice();
+    const searchedTerm = searchTerm;
+    const currentCategory = category;
     const chosenApps = [];
 
     allApps.forEach(app => {
@@ -72,8 +88,8 @@ export class App extends Component {
     return chosenApps;
   };
 
-  sortChosenApps = () => {
-    return this.filterApps().sort((a, b) => {
+  const sortChosenApps = () => {
+    return filterApps().sort((a, b) => {
       var sumA = a.subscriptions.reduce((prev, next) => prev + next.price, 0);
       var sumB = b.subscriptions.reduce((prev, next) => prev + next.price, 0);
       if (sumA < sumB) {
@@ -86,80 +102,71 @@ export class App extends Component {
     });
   };
 
-  showApps = () => {
-    return this.sortChosenApps().slice(
-      this.state.indexOfFirstApp,
-      this.state.indexOfLastApp
-    );
+  const showApps = () => {
+    return sortChosenApps().slice(appIndex);
   };
 
-  numAppsInChosenApps = () => {
-    const numOfApps = this.filterApps();
-    return numOfApps.length;
+  // const numAppsInChosenApps = () => {
+  //   const numOfApps = this.filterApps();
+  //   return numOfApps.length;
+  // };
+
+  // const nextApps = () => {
+  //   const numOfApps2 = this.numAppsInChosenApps();
+  //   if (numOfApps2 <= this.state.indexOfLastApp) {
+  //     return null;
+  //   }
+  //   this.setState({
+  //     activePage: this.state.activePage + 1,
+  //     indexOfFirstApp: this.state.indexOfFirstApp + 3,
+  //     indexOfLastApp: this.state.indexOfLastApp + 3
+  //   });
+  // };
+
+  // const previousApps = () => {
+  //   if (this.state.indexOfFirstApp === 0) {
+  //     return null;
+  //   }
+  //   this.setState({
+  //     activePage: this.state.activePage - 1,
+  //     indexOfFirstApp: this.state.indexOfFirstApp - 3,
+  //     indexOfLastApp: this.state.indexOfLastApp - 3
+  //   });
+  // };
+
+  // const handlePaginateClick = page => {
+  //   const newIndexOfLastApp = page * 3;
+  //   const newIndexOfFirstApp = newIndexOfLastApp - 3;
+  //   this.setState({
+  //     activePage: page,
+  //     indexOfFirstApp: newIndexOfFirstApp,
+  //     indexOfLastApp: newIndexOfLastApp
+  //   });
+  // };
+
+  const handleChange = event => {
+    setSearchTerm(event.target.value);
   };
 
-  nextApps = () => {
-    const numOfApps2 = this.numAppsInChosenApps();
-    if (numOfApps2 <= this.state.indexOfLastApp) {
-      return null;
-    }
-    this.setState({
-      activePage: this.state.activePage + 1,
-      indexOfFirstApp: this.state.indexOfFirstApp + 3,
-      indexOfLastApp: this.state.indexOfLastApp + 3
-    });
-  };
-
-  previousApps = () => {
-    if (this.state.indexOfFirstApp === 0) {
-      return null;
-    }
-    this.setState({
-      activePage: this.state.activePage - 1,
-      indexOfFirstApp: this.state.indexOfFirstApp - 3,
-      indexOfLastApp: this.state.indexOfLastApp - 3
-    });
-  };
-
-  handlePaginateClick = page => {
-    const newIndexOfLastApp = page * 3;
-    const newIndexOfFirstApp = newIndexOfLastApp - 3;
-    this.setState({
-      activePage: page,
-      indexOfFirstApp: newIndexOfFirstApp,
-      indexOfLastApp: newIndexOfLastApp
-    });
-  };
-
-  handleChange = event => {
-    this.setState({
-      searchTerm: event.target.value
-    });
-  };
-
-  render() {
-    const { category, activePage } = this.state;
-
-    return (
-      <div className="flex-container">
-        <NavHooks
-          setCategory={this.setCategory}
-          // categories={categories}
-          currentCategory={category}
-          resetCategory={this.resetCategory}
-        />
-        <AppList
-          apps={this.showApps()}
-          numOfApps={this.numAppsInChosenApps()}
-          nextApps={this.nextApps}
-          previousApps={this.previousApps}
-          handleClick={this.handlePaginateClick}
-          handleChange={this.handleChange}
-          activePage={activePage}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="flex-container">
+      <NavHooks
+        setCategory={categoryHandler}
+        // categories={categories}
+        currentCategory={category}
+        resetCategory={resetCategory}
+      />
+      <AppList
+        apps={showApps()}
+        // numOfApps={numAppsInChosenApps()}
+        // nextApps={nextApps}
+        // previousApps={previousApps}
+        // handleClick={handlePaginateClick}
+        handleChange={handleChange}
+        activePage={activePage}
+      />
+    </div>
+  );
+};
 
 export default App;
