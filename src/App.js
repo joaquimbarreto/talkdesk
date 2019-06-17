@@ -6,6 +6,8 @@ import "./styles.css";
 const API = "http://localhost:3001/apps";
 
 export class App extends Component {
+
+  // React hooks baby!
   state = {
     apps: [],
     indexOfFirstApp: 0,
