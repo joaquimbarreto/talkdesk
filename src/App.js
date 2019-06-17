@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from "react";
-// import Nav from "./components/Nav";
 import NavHooks from "./components/NavHooks";
 import AppList from "./containers/AppList.js";
 import "./styles.css";
 
 const API = "http://localhost:3001/apps";
 
-const App = props => {
-  // state = {
-  //   apps: [],
-  //   indexOfFirstApp: 0,
-  //   indexOfLastApp: 3,
-  //   category: "",
-  //   searchTerm: "",
-  //   activePage: 1
-  // };
-
+const App = () => {
   const [apps, setApps] = useState([]);
 
   const [activePage, setActivePage] = useState(1);
@@ -38,16 +28,6 @@ const App = props => {
     fetchAPI().then(data => setApps(data));
   }, []);
 
-  // componentDidMount = () => {
-  //   this.fetchAPI()
-  //     .then(data => {
-  //       this.setState({
-  //         apps: data
-  //       });
-  //     })
-  //     .catch(err => console.log(err));
-  // };
-
   const categoryHandler = category => {
     setActivePage(1);
     setCategory(category);
@@ -68,20 +48,14 @@ const App = props => {
   };
 
   const filterApps = () => {
-    const allApps = apps.slice();
-    const searchedTerm = searchTerm;
-    const currentCategory = category;
     const chosenApps = [];
 
-    allApps.forEach(app => {
-      if (searchedTerm.length > 0) {
-        if (app.name.toLowerCase().includes(searchedTerm.toLowerCase()))
+    apps.forEach(app => {
+      if (searchTerm.length > 0) {
+        if (app.name.toLowerCase().includes(searchTerm.toLowerCase()))
           chosenApps.push(app);
       } else {
-        if (
-          app.categories.includes(currentCategory) ||
-          currentCategory.length === 0
-        )
+        if (app.categories.includes(category) || category.length === 0)
           chosenApps.push(app);
       }
     });
@@ -103,46 +77,49 @@ const App = props => {
   };
 
   const showApps = () => {
-    return sortChosenApps().slice(appIndex);
+    return sortChosenApps().slice(
+      appIndex.indexOfFirstApp,
+      appIndex.indexOfLastApp
+    );
   };
 
-  // const numAppsInChosenApps = () => {
-  //   const numOfApps = this.filterApps();
-  //   return numOfApps.length;
-  // };
+  const numAppsInChosenApps = () => {
+    const numOfApps = filterApps();
+    return numOfApps.length;
+  };
 
-  // const nextApps = () => {
-  //   const numOfApps2 = this.numAppsInChosenApps();
-  //   if (numOfApps2 <= this.state.indexOfLastApp) {
-  //     return null;
-  //   }
-  //   this.setState({
-  //     activePage: this.state.activePage + 1,
-  //     indexOfFirstApp: this.state.indexOfFirstApp + 3,
-  //     indexOfLastApp: this.state.indexOfLastApp + 3
-  //   });
-  // };
+  const nextApps = () => {
+    const numOfApps2 = numAppsInChosenApps();
+    if (numOfApps2 <= appIndex.indexOfLastApp) {
+      return null;
+    }
+    setActivePage(activePage + 1);
+    setAppIndex({
+      indexOfFirstApp: appIndex.indexOfFirstApp + 3,
+      indexOfLastApp: appIndex.indexOfLastApp + 3
+    });
+  };
 
-  // const previousApps = () => {
-  //   if (this.state.indexOfFirstApp === 0) {
-  //     return null;
-  //   }
-  //   this.setState({
-  //     activePage: this.state.activePage - 1,
-  //     indexOfFirstApp: this.state.indexOfFirstApp - 3,
-  //     indexOfLastApp: this.state.indexOfLastApp - 3
-  //   });
-  // };
+  const previousApps = () => {
+    if (appIndex.indexOfFirstApp === 0) {
+      return null;
+    }
+    setActivePage(activePage - 1);
+    setAppIndex({
+      indexOfFirstApp: appIndex.indexOfFirstApp - 3,
+      indexOfLastApp: appIndex.indexOfLastApp - 3
+    });
+  };
 
-  // const handlePaginateClick = page => {
-  //   const newIndexOfLastApp = page * 3;
-  //   const newIndexOfFirstApp = newIndexOfLastApp - 3;
-  //   this.setState({
-  //     activePage: page,
-  //     indexOfFirstApp: newIndexOfFirstApp,
-  //     indexOfLastApp: newIndexOfLastApp
-  //   });
-  // };
+  const handlePaginateClick = page => {
+    const newIndexOfLastApp = page * 3;
+    const newIndexOfFirstApp = newIndexOfLastApp - 3;
+    setActivePage(page);
+    setAppIndex({
+      indexOfFirstApp: newIndexOfFirstApp,
+      indexOfLastApp: newIndexOfLastApp
+    });
+  };
 
   const handleChange = event => {
     setSearchTerm(event.target.value);
@@ -152,16 +129,15 @@ const App = props => {
     <div className="flex-container">
       <NavHooks
         setCategory={categoryHandler}
-        // categories={categories}
         currentCategory={category}
         resetCategory={resetCategory}
       />
       <AppList
         apps={showApps()}
-        // numOfApps={numAppsInChosenApps()}
-        // nextApps={nextApps}
-        // previousApps={previousApps}
-        // handleClick={handlePaginateClick}
+        numOfApps={numAppsInChosenApps()}
+        nextApps={nextApps}
+        previousApps={previousApps}
+        handleClick={handlePaginateClick}
         handleChange={handleChange}
         activePage={activePage}
       />
