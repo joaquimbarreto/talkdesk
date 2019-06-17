@@ -1,19 +1,18 @@
 import React, { Component } from "react";
-import Nav from "./components/Nav";
+// import Nav from "./components/Nav";
+import NavHooks from "./components/NavHooks";
 import AppList from "./containers/AppList.js";
 import "./styles.css";
 
 const API = "http://localhost:3001/apps";
 
 export class App extends Component {
-
   // React hooks baby!
   state = {
     apps: [],
     indexOfFirstApp: 0,
     indexOfLastApp: 3,
     category: "",
-    categories: [],
     searchTerm: "",
     activePage: 1
   };
@@ -26,15 +25,8 @@ export class App extends Component {
   componentDidMount = () => {
     this.fetchAPI()
       .then(data => {
-        const cats = data.map(app => app.categories);
-        const allCategories = Array.prototype.concat.apply([], cats);
-        const uniqCategories = allCategories.filter((item, index) => {
-          return allCategories.indexOf(item) >= index;
-        });
-        const sortUniqCategories = uniqCategories.sort();
         this.setState({
-          apps: data,
-          categories: sortUniqCategories
+          apps: data
         });
       })
       .catch(err => console.log(err));
@@ -146,13 +138,13 @@ export class App extends Component {
   };
 
   render() {
-    const { category, activePage, categories } = this.state;
+    const { category, activePage } = this.state;
 
     return (
       <div className="flex-container">
-        <Nav
+        <NavHooks
           setCategory={this.setCategory}
-          categories={categories}
+          // categories={categories}
           currentCategory={category}
           resetCategory={this.resetCategory}
         />
