@@ -19,7 +19,7 @@ export class Paginate extends Component {
       <div>
         <ul className="pagination">
           <li key="less" onClick={previousApps}>
-            <a>&lt;</a>
+            <a href="!#">&lt;</a>
           </li>
 
           {pageNumbers.map(number => {
@@ -29,13 +29,13 @@ export class Paginate extends Component {
                 className={activePage === number ? "active" : null}
                 onClick={() => handleClick(number)}
               >
-                <a>{number}</a>
+                <a href="!#">{number}</a>
               </li>
             );
           })}
 
           <li key="more" onClick={nextApps}>
-            <a>&gt;</a>
+            <a href="!#">&gt;</a>
           </li>
         </ul>
       </div>

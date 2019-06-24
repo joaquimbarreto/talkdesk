@@ -30,7 +30,9 @@ const NavHooks = props => {
               key={category}
               className={props.currentCategory === category ? "active" : null}
             >
-              <a onClick={() => props.setCategory(category)}>{category}</a>
+              <a href="!#" onClick={() => props.setCategory(category)}>
+                {category}
+              </a>
             </li>
           );
         })}

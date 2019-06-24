@@ -8,16 +8,12 @@ const API = "http://localhost:3001/apps";
 
 const App = () => {
   const [apps, setApps] = useState([]);
-
   const [activePage, setActivePage] = useState(1);
-
   const [category, setCategory] = useState("");
-
   const [appIndex, setAppIndex] = useState({
     indexOfFirstApp: 0,
     indexOfLastApp: 3
   });
-
   const [searchTerm, setSearchTerm] = useState("");
 
   const fetchAPI = async () => {
@@ -50,7 +46,6 @@ const App = () => {
 
   const filterApps = () => {
     const chosenApps = [];
-
     apps.forEach(app => {
       if (searchTerm.length > 0) {
         if (app.name.toLowerCase().includes(searchTerm.toLowerCase()))
